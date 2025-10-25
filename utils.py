@@ -1,3 +1,6 @@
+from common import Entities, Items, North, East, South, West
+from common import can_harvest, harvest, num_items, get_entity_type
+
 map = {
 	Entities.Grass:Items.Hay,
 	Entities.Carrot:Items.Carrot,
@@ -18,7 +21,7 @@ def harvest_with_num():
 		
 	
 def run_with_count(run):
-	items = [Items.Hay, Items.Wood, Items.Carrot, Items.Pumpkin]
+	items = [Items.Hay, Items.Wood, Items.Carrot, Items.Pumpkin, Items.Power]
 	count = {}
 	
 	

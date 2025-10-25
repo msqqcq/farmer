@@ -1,6 +1,9 @@
+from common import Entities, Items, North, East, South, West
+from common import can_harvest, harvest, num_items, get_entity_type, get_pos_x, get_pos_y, get_world_size
 
 d = North
 routes = []
+world_size = get_world_size()
 
 def reverse_d():
 	global d
@@ -50,7 +53,10 @@ def do_nothing():
 	pass
 
 def mv_loc(loc, do_something=do_nothing):
-	world_size = get_world_size()
+	if loc in [East, West, North, South]:
+		move(loc)
+		return
+	global world_size
 	routes = []
 	
 	# Handle X movement
@@ -84,7 +90,8 @@ def go_once(do_something, size=get_world_size()):
 		reverse_d()
 		mv(East)
 	mv_loc([0,0])
-	return routes[0:-1]
+	routes[-1] = [0,0]
+	return routes
 		
 def go(do_something):
 	global routes
@@ -92,3 +99,27 @@ def go(do_something):
 		for i in range(len(routes)):
 			do_something()
 			move(routes[i])
+
+def snake_routes(l = get_world_size()):
+	routes = []
+	
+	f = True
+	for x in range(1, l):
+		if f:
+			routes.append(East)
+			for _ in range(x):
+				routes.append(North)
+			
+			for _ in range(x):
+				routes.append(West)
+			routes.append(North)
+			for _ in range(x+1):
+				routes.append(East)
+			f = False
+		else:
+			for _ in range(x):
+				routes.append(South)
+			f = True
+	if l%2==0:
+		routes = routes[:-1-l]
+	return routes

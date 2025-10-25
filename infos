@@ -1,0 +1,48 @@
+size 6
+Items.Hay -1728 -81/s
+Items.Wood 37312 1736/s
+Items.Carrot 5760 268/s
+Items.Pumpkin 0 0/s
+
+size 7
+Items.Hay -2304 -74/s
+Items.Wood 73536 2335/s
+Items.Carrot 6912 219/s
+Items.Pumpkin 0 0/s
+
+size 8
+Items.Hay -3072 -79/s
+Items.Wood 102528 2627/s
+Items.Carrot 9696 248/s
+Items.Pumpkin 0 0/s
+
+size 9
+Items.Hay -3840 -78/s
+Items.Wood 133440 2681/s
+Items.Carrot 12768 256/s
+Items.Pumpkin 0 0/s
+
+size 10
+Items.Hay -4800 -80/s
+Items.Wood 132480 2204/s
+Items.Carrot 16320 271/s
+Items.Pumpkin 0 0/s
+
+
+size 9 companion
+Items.Hay 25792 381/s
+Items.Wood 277952 4108/s
+Items.Carrot 1312 19/s
+Items.Pumpkin 0 0/s
+
+size 8 companion
+Items.Hay 18656 349/s
+Items.Wood 200160 3748/s
+Items.Carrot 1664 31/s
+Items.Pumpkin 0 0/s
+
+size 10 companion
+Items.Hay 18656 214/s
+Items.Wood 363552 4178/s
+Items.Carrot 2464 28/s
+Items.Pumpkin 0 0/s
