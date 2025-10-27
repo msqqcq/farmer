@@ -114,3 +114,23 @@ def use_item(item):
 
 def measure(loc):
 	pass
+
+
+def gr():
+	d = {}
+	for i in range(32):
+		for j in range(32):
+			for m in range(32):
+				for n in range(32):
+					d[i*35937 + j*1089 + m*33 + n] = 0
+					
+	for i in range(32):
+		for j in range(32):
+			k = i*100000 + j + 10000000
+			if k in d.keys():
+				print("!!!!!!!!")
+				return
+
+if __name__ == "__main__":
+	gr()
+

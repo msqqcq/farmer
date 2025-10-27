@@ -22,11 +22,11 @@ def re_d(d):
 
 def gk(ls=[]):
 	if not ls or len(ls) != 2:
+		if len(ls) == 1:
+			loc = ls[0]
+			return loc[0]*100000 + loc[1]+10000000
 		return
-	k = ''
-	for i in ls:
-		k += str(i[0]) + str(i[1])
-	return k
+	return ls[0][0]*35937 + ls[0][1]*1089 + ls[1][0]*33 + ls[1][1]
 
 
 locs = []
@@ -116,10 +116,10 @@ def record(d):
 	if len(locs) > 2:		
 		for i in range(len(locs)-2):
 			rs[gk([locs[i], current_loc])] = last_loc
-			if i == len(locs)-3:
-				rs[gk([current_loc, locs[i]])] = last_loc
-			else:
-				rs[gk([current_loc, locs[i]])] = pick_near(locs[i])
+			# if i == len(locs)-3:
+			# 	rs[gk([current_loc, locs[i]])] = last_loc
+			# else:
+			# 	rs[gk([current_loc, locs[i]])] = pick_near(locs[i])
 			
 		rs[gk([last_loc, current_loc])] = d
 		rs[gk([current_loc, last_loc])] = re_d(d)
@@ -127,20 +127,51 @@ def record(d):
 		fix_loc = locs[-2]
 		if not is_near(fix_loc, current_loc, d):
 			rs[gk([fix_loc, current_loc])] = last_loc
-			rs[gk([current_loc, fix_loc])] = locs[-3]
+			# rs[gk([current_loc, fix_loc])] = locs[-3]
 			
 	# print_rs()
 	last_loc = current_loc
-	
+
+
+def get_routes(cur, destination):
+	global rs
+	k = gk([cur, destination])
+	d = rs[k]
+
+	routes = []
+	while d not in [East, West, North, South]:
+		r = rs[gk([d, destination])]
+		routes.append(r)
+		d = rs[gk([cur, d])]
+	routes.append(d)
+	return routes	
+
+
 def move_to(cur, destination):
 	if cur == destination:
 		return
-	d = rs[gk([cur, destination])]
-	if d not in [East, West, North, South]:
-		move_to(cur, d)
-		move_to(d, destination)
-	else:
-		move(d)
+
+	reverse = True
+	k = gk([cur, destination])
+	if k not in rs:
+		k = gk([destination, cur])
+		if k not in rs:
+			quick_print("No path found")
+			return
+		reverse = False
+		t = cur
+		cur = destination
+		destination = t
+
+
+	routes = get_routes(cur, destination)
+	if reverse:
+		for i in range(1,len(routes)+1):
+			move(routes[-i])
+		return
+	for i in range(len(routes)):
+		move(routes[i])
+		
 			
 
 def is_xr():
