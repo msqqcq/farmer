@@ -18,62 +18,42 @@ def mv(dir):
 	routes.append(dir)
 	
 def get_shortest_direction(curr, target, world_size, is_x_axis):
-	max_steps = (world_size + 1) // 2
 	steps = target - curr
-	if steps > 0:
-		if steps > max_steps:
-			steps = world_size - steps
-			if is_x_axis:
-				direction = West 
-			else:
-				direction = South
-		else:
-			if is_x_axis:
-				direction = East 
-			else:
-				direction = North
-	else:
-		steps = abs(steps)
-		if steps > max_steps:
-			steps = world_size - steps
-			if is_x_axis:
-				direction = East 
-			else:
-				direction = North
-		else:
-			if is_x_axis:
-				direction = West 
-			else:
-				direction = South
 	if steps == 0:
 		return None, 0
-	return direction, steps
+
+	abs_steps = abs(steps)
+	max_steps = (world_size + 1) // 2
+	if abs_steps > max_steps:
+		abs_steps = world_size - abs_steps
+		steps = -steps
+
+	if is_x_axis:
+		directions = [West, East]
+	else:
+		directions = [South, North]
+	direction = directions[steps > 0]
+
+	return direction, abs_steps
 	
 def do_nothing():
-	pass
+	return
 
 def mv_loc(loc, do_something=do_nothing):
 	if loc in [East, West, North, South]:
 		move(loc)
 		return
 	global world_size
-	routes = []
-	
-	# Handle X movement
+
 	dir_x, steps_x = get_shortest_direction(get_pos_x(), loc[0], world_size, True)
-	if dir_x:
-		for _ in range(steps_x):
-			routes.append(dir_x)
-	
-	# Handle Y movement
-	dir_y, steps_y = get_shortest_direction(get_pos_y(), loc[1], world_size, False)
-	if dir_y:
-		for _ in range(steps_y):
-			routes.append(dir_y)
-	
-	for direction in routes:
+	for _ in range(steps_x):
 		do_something()
-		move(direction)
+		move(dir_x)
+
+	dir_y, steps_y = get_shortest_direction(get_pos_y(), loc[1], world_size, False)
+	for _ in range(steps_y):
+		do_something()
+		move(dir_y)
 
 def get_loc_str(x=get_pos_x(), y=get_pos_y()):
 	return str(x) + str(y)

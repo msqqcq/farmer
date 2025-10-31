@@ -1,7 +1,8 @@
 from run_ground import go_once, go, mv_loc, get_loc_str
 from utils import run_with_count
 
-
+set_world_size(16)
+world_size = 16
 deads = {}
 
 def plant_pumpkin():
@@ -12,7 +13,7 @@ def plant_pumpkin():
         use_item(Items.Water)
 
 def gk(x,y):
-	return x*33 + y
+    return x*33 + y
 
 def log_dead():
     global deads
@@ -37,7 +38,7 @@ def mv_to(x, y):
 
 def mvn():
     global deads
-    l = get_world_size()/2
+    l = world_size/2
     for i in range(l):
         plant_pumpkin()
         move(North)
@@ -56,7 +57,7 @@ def mvn():
 
 def mvs():
     global deads
-    l = get_world_size()/2
+    l = world_size/2
     for i in range(l):
         plant_pumpkin()
         move(South)
@@ -74,7 +75,7 @@ def mvs():
             log_dead()
 
 def go():
-    for _ in range(get_world_size()-1):
+    for _ in range(world_size-1):
         spawn_drone(mvn)
         move(South)
         spawn_drone(mvs)
@@ -93,6 +94,8 @@ def go():
 
 
 def run():
-    for _ in range(2):
+    for _ in range(10):
         go()
+
+clear()
 run_with_count(run)
